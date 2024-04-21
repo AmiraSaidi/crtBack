@@ -27,8 +27,8 @@ public class UserService {
         return userCreated;
     }
 
-    public void deleteUserById(Long userId) {
-        userRepository.deleteById(userId);
+    public void deleteUserByEmail(Long id) {
+        userRepository.deleteById(id);
     }
 
     public User updateUser(Long id, User user) {
@@ -47,5 +47,10 @@ public class UserService {
         if(user.getEmail() != null ) { oldUserFound.setEmail(user.getEmail());}
         if(user.getPassword() != null ) { oldUserFound.setPassword(user.getPassword());}
         return userRepository.save(oldUserFound);
+    }
+
+    public String getUserPassword(String email) {
+        String pwd = userRepository.findPasswordByEmail(email);
+        return pwd;
     }
 }

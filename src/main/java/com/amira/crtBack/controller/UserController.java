@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 public class UserController {
 
@@ -38,11 +39,13 @@ public class UserController {
         return userCreated;
     }
 
-    //http://localhost:8080/user/delete-user-by-id/2
-    @DeleteMapping("/delete-user-by-id/{userId}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("userId") Long userId) {
-        userService.deleteUserById(userId);
-        return ResponseEntity.ok("Deleted succesfully");
+    //http://localhost:8080/user/delete-user/2
+    @DeleteMapping("/delete-user/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
+    //public void deleteUserById(@PathVariable("id") Long id) {
+
+        userService.deleteUserByEmail(id);
+        return ResponseEntity.ok().build();
     }
 
     //http://localhost:8080/user/update-user/4
@@ -54,5 +57,12 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id not found, No update !!.");
         }
+    }
+
+    //http://localhost:8080/user/get-userPassword/amira1@gmail.com
+    @GetMapping("/get-userPassword/{email}")
+    @ResponseBody
+    public String getUserPassword(@PathVariable("email") String email) {
+        return userService.getUserPassword(email);
     }
 }
