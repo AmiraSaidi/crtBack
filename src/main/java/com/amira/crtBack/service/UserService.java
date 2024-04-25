@@ -19,6 +19,7 @@ public class UserService {
     }
     public User getUserById(Long id) {
         User user = userRepository.findById(id).orElse(null);
+        System.out.println("getUserById result : " + user);
         return user;
     }
 

@@ -65,4 +65,17 @@ public class UserController {
     public String getUserPassword(@PathVariable("email") String email) {
         return userService.getUserPassword(email);
     }
+
+    //http://localhost:8080/user/get-getUser-Details/2
+    @GetMapping("/get-getUser-Details/{userId}")
+    public ResponseEntity<User> getUserDetails(@PathVariable("userId") Long userId) {
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
+
